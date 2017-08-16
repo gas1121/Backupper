@@ -9,9 +9,7 @@ certifi==2017.7.27.1      # via requests
 chardet==3.0.4            # via requests
 dill==0.2.7.1             # via multiprocess
 idna==2.6                 # via requests
-libarchive==0.4.3
 multiprocess==0.70.5      # via bypy
-nose==1.3.7               # via libarchive
 pyreadline==2.1           # via dill
 requests-toolbelt==0.8.0  # via bypy
 requests==2.18.4          # via bypy, requests-toolbelt

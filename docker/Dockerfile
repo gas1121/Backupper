@@ -10,7 +10,7 @@ RUN chmod +x /tmp/set_mirror.sh
 RUN /tmp/set_mirror.sh $USE_MIRROR
 
 # os setup
-RUN apt-get update && apt-get install -y libarchive-dev
+RUN apt-get update
 
 # install requirements
 RUN mkdir -p /app
