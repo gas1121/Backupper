@@ -10,5 +10,8 @@ services:
     volumes: 
       - .:/app
       - bypy:/root/.bypy
+      - example_data:/backup/example_data
 volumes:
   bypy:
+  example_data:
+    external: true
