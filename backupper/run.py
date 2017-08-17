@@ -1,16 +1,9 @@
-import schedule
-import time
-
-
-def backup_job():
-    pass
+import os
+import subprocess
 
 
 def main():
-    schedule.every().day.at('23:00').do(backup_job)
-    while True:
-        schedule.run_pending()
-        time.sleep(60)
+    subprocess.run(['7z', 'a', 'archive.7z', '/backup/pgdata'])
 
 
 if __name__ == '__main__':

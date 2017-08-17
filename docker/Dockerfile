@@ -10,7 +10,7 @@ RUN chmod +x /tmp/set_mirror.sh
 RUN /tmp/set_mirror.sh $USE_MIRROR
 
 # os setup
-RUN apt-get update
+RUN apt-get update && apt-get install -y p7zip-full
 
 # install requirements
 RUN mkdir -p /app
