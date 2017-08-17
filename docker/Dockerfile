@@ -14,7 +14,7 @@ RUN apt-get update
 
 # install requirements
 RUN mkdir -p /app
-COPY . /app
+COPY backupper /app
 COPY docker/run_tests.sh /app
 RUN chmod +x /app/run_tests.sh
 WORKDIR /app
