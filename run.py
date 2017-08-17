@@ -11,7 +11,9 @@ def backup_job():
     """
     client = docker.DockerClient(base_url='unix://var/run/docker.sock')
     backupper_path = os.getcwd() + '/backupper'
+    # TODO read volume and folder form file every time
     volumes = {
+        'backupper_bypy': {'bind': '/root/.bypy', 'mode': 'rw'},
         backupper_path: {'bind': '/app', 'mode': 'rw'},
         'japancinemastatusspider_pgdata': {'bind': '/backup/pgdata',
                                            'mode': 'rw'},

@@ -4,6 +4,7 @@
 #
 #    pip-compile --no-index --output-file backupper/requirements.txt backupper/requirements.in
 #
+arrow==0.10.0
 bypy==1.5.7
 certifi==2017.7.27.1      # via requests
 chardet==3.0.4            # via requests
@@ -11,6 +12,8 @@ dill==0.2.7.1             # via multiprocess
 idna==2.6                 # via requests
 multiprocess==0.70.5      # via bypy
 pyreadline==2.1           # via dill
+python-dateutil==2.6.1    # via arrow
 requests-toolbelt==0.8.0  # via bypy
 requests==2.18.4          # via bypy, requests-toolbelt
+six==1.10.0               # via python-dateutil
 urllib3==1.22             # via requests

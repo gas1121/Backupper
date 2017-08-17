@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y p7zip-full
 
 # install requirements
 RUN mkdir -p /app
+RUN mkdir -p /sync
 COPY backupper /app
 COPY docker/run_tests.sh /app
 RUN chmod +x /app/run_tests.sh
