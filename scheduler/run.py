@@ -1,20 +1,17 @@
 import schedule
 import docker
 import time
-import os
 
 
 def backup_job():
     """
     mount target named volumes and dir to backupper container and
-    generate a compressed package
+    generate a compressed package, then send it to BaiduYunNetDisk
     """
     client = docker.DockerClient(base_url='unix://var/run/docker.sock')
-    backupper_path = os.getcwd() + '/backupper'
     # TODO read volume and folder form file every time
     volumes = {
         'backupper_bypy': {'bind': '/root/.bypy', 'mode': 'rw'},
-        backupper_path: {'bind': '/app', 'mode': 'rw'},
         'japancinemastatusspider_pgdata': {'bind': '/backup/pgdata',
                                            'mode': 'rw'},
     }
@@ -29,4 +26,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    backup_job()
+    #main()

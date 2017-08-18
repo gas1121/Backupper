@@ -6,12 +6,21 @@ services:
       dockerfile: ./docker/Dockerfile
       args:
         - USE_MIRROR=${USE_MIRROR:-0}
+    image: backupper
     working_dir: /app
     volumes: 
-      - .:/app
+      - ./backupper:/app
       - bypy:/root/.bypy
-      - example_data:/backup/example_data
+  scheduler:
+    build:
+      context: .
+      dockerfile: ./docker/scheduler/Dockerfile
+      args:
+        - USE_MIRROR=${USE_MIRROR:-0}
+    working_dir: /app
+    privileged: true
+    volumes: 
+      - ./scheduler:/app
+      - /var/run/docker.sock:/var/run/docker.sock
 volumes:
   bypy:
-  example_data:
-    external: true
