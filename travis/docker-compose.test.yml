@@ -1,0 +1,29 @@
+version: "3"
+services:
+  backupper:
+    build:
+      context: .
+      dockerfile: ./docker/backupper/Dockerfile
+      args:
+        - USE_MIRROR=${USE_MIRROR:-0}
+    image: backupper
+    command: ping localhost
+    working_dir: /app
+    volumes: 
+      - ./backupper:/app
+      - bypy:/root/.bypy
+  scheduler:
+    build:
+      context: .
+      dockerfile: ./docker/scheduler/Dockerfile
+      args:
+        - USE_MIRROR=${USE_MIRROR:-0}
+    working_dir: /app
+    command: ping localhost
+    privileged: true
+    volumes: 
+      - ./scheduler:/app
+      - ./data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+volumes:
+  bypy:
