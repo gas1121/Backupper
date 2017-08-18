@@ -9,12 +9,17 @@ def backup_job():
     generate a compressed package, then send it to BaiduYunNetDisk
     """
     client = docker.DockerClient(base_url='unix://var/run/docker.sock')
-    # TODO read volume and folder form file every time
+    # read volume and folder form file every time
     volumes = {
         'backupper_bypy': {'bind': '/root/.bypy', 'mode': 'rw'},
-        'japancinemastatusspider_pgdata': {'bind': '/backup/pgdata',
-                                           'mode': 'rw'},
     }
+    with open('/data/data.txt', 'r') as f:
+        for line in f:
+            key, val = line.partition("=")[::2]
+            volumes[key] = {
+                'bind': '/backup/' + val,
+                'mode': 'rw',
+            }
     print(client.containers.run('backupper', volumes=volumes))
 
 
