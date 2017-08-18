@@ -1,4 +1,6 @@
 # Backupper
+[![Build Status](https://travis-ci.org/gas1121/Backupper.svg?branch=master)](https://travis-ci.org/gas1121/Backupper) [![Coverage Status](https://coveralls.io/repos/github/gas1121/Backupper/badge.svg?branch=master)](https://coveralls.io/github/gas1121/Backupper?branch=master) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/gas1121/Backupper/master/LICENSE)
+
 Back up your data with docker.
 
 ## Usage
