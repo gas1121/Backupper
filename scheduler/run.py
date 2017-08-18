@@ -16,15 +16,20 @@ def backup_job():
     with open('/data/data.txt', 'r') as f:
         for line in f:
             key, val = line.partition("=")[::2]
+            if not key or not val:
+                continue
             volumes[key] = {
                 'bind': '/backup/' + val,
                 'mode': 'rw',
             }
-    print(client.containers.run('backupper', volumes=volumes))
+    # if no volume needs to backup, return
+    if len(volumes) == 1:
+        return
+    client.containers.run('backupper', volumes=volumes)
 
 
 def main():
-    schedule.every().day.at('23:00').do(backup_job)
+    schedule.every().week().at('23:00').do(backup_job)
     while True:
         schedule.run_pending()
         time.sleep(60)
