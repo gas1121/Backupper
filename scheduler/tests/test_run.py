@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch, mock_open
 
-from run import backup_job
+from run import backup_job, main
 
 
 class TestRun(unittest.TestCase):
@@ -29,3 +29,16 @@ class TestRun(unittest.TestCase):
             backup_job()
         m.assert_called_once_with('/data/data.txt', 'r')
         docker_mock.DockerClient().containers.run.assert_not_called()
+
+    @patch('run.backup_job')
+    @patch('run.start_scheduler')
+    def test_main(self, start_scheduler_mock, backup_job_mock):
+        main(["--run"])
+        backup_job_mock.assert_called_once()
+        start_scheduler_mock.assert_not_called()
+        backup_job_mock.reset_mock()
+        start_scheduler_mock.reset_mock()
+
+        main([])
+        start_scheduler_mock.assert_called_once()
+        backup_job_mock.assert_not_called()

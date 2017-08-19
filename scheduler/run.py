@@ -1,4 +1,6 @@
 import logging
+import argparse
+import sys
 
 import schedule
 import docker
@@ -39,7 +41,7 @@ def backup_job():
     client.containers.run('backupper', volumes=volumes)
 
 
-def main():
+def start_scheduler():
     logger.info('start backup scheduler')
     schedule.every().saturday.at('4:00').do(backup_job)
     while True:
@@ -47,5 +49,17 @@ def main():
         time.sleep(60)
 
 
+def main(args):
+    parser = argparse.ArgumentParser(description='Scheduler fore backupper')
+    parser.add_argument('--run', action='store_true', default=False,
+                        help="run backup job once and then exit")
+    parsed_args = parser.parse_args(args)
+    if parsed_args.run:
+        logger.info('run backup job right now and then exit')
+        backup_job()
+    else:
+        start_scheduler()
+
+
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])
