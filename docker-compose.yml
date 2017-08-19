@@ -19,7 +19,7 @@ services:
         - USE_MIRROR=${USE_MIRROR:-0}
     working_dir: /app
     privileged: true
-    restart: true
+    restart: always
     volumes: 
       - ./scheduler:/app
       - ./data:/data
