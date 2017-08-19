@@ -27,6 +27,7 @@ def backup_job():
     }
     with open('/data/data.txt', 'r') as f:
         for line in f:
+            line = line.rstrip('\n')
             key, val = line.partition("=")[::2]
             if not key or not val:
                 continue
@@ -38,7 +39,7 @@ def backup_job():
     if len(volumes) == 1:
         return
     logger.info('back up with {}'.format(volumes))
-    client.containers.run('backupper', volumes=volumes)
+    print(client.containers.run('backupper', 'ls /backup/experimental', volumes=volumes))
 
 
 def start_scheduler():
