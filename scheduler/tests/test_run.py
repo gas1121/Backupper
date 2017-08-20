@@ -1,10 +1,14 @@
 import unittest
 from unittest.mock import patch, mock_open
+import os
 
 from run import backup_job, main
 
 
 class TestRun(unittest.TestCase):
+    @patch.dict(os.environ, {
+        "ARCHIVE_NAME_PREFIX": "archive",
+        "ARCHIVE_PASS": ""})
     @patch("run.docker")
     def test_backup_job(self, docker_mock):
         m = mock_open(read_data='a=b')
@@ -17,8 +21,12 @@ class TestRun(unittest.TestCase):
             'backupper_bypy': {'bind': '/root/.bypy', 'mode': 'rw'},
             'a': {'bind': '/backup/b', 'mode': 'rw'},
         }
+        expect_env = {
+            "ARCHIVE_NAME_PREFIX": "archive",
+            "ARCHIVE_PASS": ""
+        }
         docker_mock.DockerClient().containers.run.assert_called_once_with(
-            'backupper', volumes=expect_volumes)
+            'backupper', environment=expect_env, volumes=expect_volumes)
         m.reset_mock()
         docker_mock.reset_mock()
 

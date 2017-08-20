@@ -1,6 +1,7 @@
 import logging
 import argparse
 import sys
+import os
 
 import schedule
 import docker
@@ -21,6 +22,10 @@ def backup_job():
     """
     logger.info('start backup job')
     client = docker.DockerClient(base_url='unix://var/run/docker.sock')
+    environment = {
+        "ARCHIVE_NAME_PREFIX": os.getenv('ARCHIVE_NAME_PREFIX'),
+        "ARCHIVE_PASS": os.getenv('ARCHIVE_PASS'),
+    }
     # read volume and folder form file every time
     volumes = {
         'backupper_bypy': {'bind': '/root/.bypy', 'mode': 'rw'},
@@ -39,7 +44,9 @@ def backup_job():
     if len(volumes) == 1:
         return
     logger.info('back up with {}'.format(volumes))
-    print(client.containers.run('backupper', volumes=volumes))
+    result = client.containers.run(
+        'backupper', environment=environment, volumes=volumes)
+    logger.debug(result)
 
 
 def start_scheduler():

@@ -1,4 +1,4 @@
-version: "3"
+version: "3.2"
 services:
   backupper:
     build:
@@ -8,6 +8,9 @@ services:
         - USE_MIRROR=${USE_MIRROR:-0}
     image: backupper
     working_dir: /app
+    environment:
+      ARCHIVE_NAME_PREFIX: ${ARCHIVE_NAME_PREFIX:-archive}
+      ARCHIVE_PASS: ${ARCHIVE_PASS}
     volumes: 
       - ./backupper:/app
       - bypy:/root/.bypy
@@ -19,7 +22,9 @@ services:
         - USE_MIRROR=${USE_MIRROR:-0}
     working_dir: /app
     privileged: true
-    restart: always
+    environment:
+      ARCHIVE_NAME_PREFIX: ${ARCHIVE_NAME_PREFIX:-archive}
+      ARCHIVE_PASS: ${ARCHIVE_PASS}
     volumes: 
       - ./scheduler:/app
       - ./data:/data
